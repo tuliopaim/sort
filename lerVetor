@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <time.h>
+
+void ler(FILE * p, int * vetor, int size){
+	int temp=0, j=0, i;
+	//LER VETORES DE ARQUIVO E ARMAZENAR
+	for(i=0;i<size;i++){
+		fscanf(p, "%d,", &temp);
+		vetor[j++] = temp;
+	}
+}
+
+void sort(int * vetor, int size){
+	int temp;
+	int i, j;
+	for (i = 0; i < size; ++i){
+		for (j = i+1; j < size; ++j){
+			if(vetor[i] > vetor [j]){
+				temp = vetor[i];
+				vetor[i] = vetor[j];
+				vetor[j] = temp;
+			}
+		}
+	}
+
+}
+
+int main(){
+
+	int temp[20][10000], size;
+	int i, j;
+	long double tempo[20];
+	clock_t c2, c1;
+	char nome[20];
+	FILE * p;
+
+	//TAMANHO DO VETOR
+	printf("Tamanho do vetor: ");
+	scanf("%d", &size);
+
+	//ABRIR ARQUIVO
+	printf("Nome do Arquivo: ");
+	scanf(" %s", nome);
+	p = fopen(nome, "r");
+	if(p == NULL) printf("TEM NADA AQUI NÃO\n");
+
+	//LER DO ARQUIVO
+	for (i = 0; i < 20; ++i){
+		ler(p, temp[i], size);
+		
+		c1=clock(); //PEGA O CLOCK INICIAL DO PROCESSADOR
+		sort(temp[i], size);
+		c2=clock(); //CLOCK FINAL
+		tempo[i] = (c2-c1)*1000.0/CLOCKS_PER_SEC;
+		printf("tempo v[%d]: %Lf\n",i,tempo[i]);
+	}
+
+	fclose(p);
+	return 0;
+}
