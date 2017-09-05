@@ -16,7 +16,7 @@ void bubbleSort (int * arr , int size)
 
 	for (iCount = 0 ; iCount < size ; iCount++)
 	{
-		for (jCount = 0 ; jCount < size - 1 ; jCount++)
+		for (jCount = 0 ; jCount < size - iCount - 1 ; jCount++)
 		{
 			if (arr[jCount] > arr[jCount + 1])
 			{
