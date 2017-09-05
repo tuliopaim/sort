@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+void selectionSort (int * arr , int size)
+{
+
+	/* 
+	* Função de ordenação Selection Sort
+	* @param endereço do array
+	* @param tamanho do array
+	*/
+	
+	int min, temp;
+	int iCount, jCount;
+
+	printf("Metodo: Selection Sort\n");
+
+	for (iCount = 0 ; iCount < size - 1 ; iCount++)
+	{
+	
+		min = iCount;
+
+		for (jCount = iCount + 1 ; jCount < size; jCount++)
+		{
+			if (arr[jCount] < arr[min])
+				min = jCount;
+		}
+		
+		if (min != iCount)
+		{
+			temp = arr[iCount];
+			arr[iCount] = arr[min];
+			arr[min] = temp;	
+		}
+	}
+
+	return ;
+}
+
+int main(){
+
+	return 0;
+}
