@@ -11,29 +11,25 @@ void bubbleSort (int * arr , int size)
 
 	int temp;
 	int iCount, jCount;	
-	char swapped;
 
 	printf ("Metodo: Bubble Sort\n");
 
 	for (iCount = 0 ; iCount < size ; iCount++)
 	{
-		swapped = 'F';
 		for (jCount = 0 ; jCount < size - 1 ; jCount++)
 		{
 			if (arr[jCount] > arr[jCount + 1])
 			{
 			temp = arr[jCount + 1];
 			arr[jCount + 1] = arr[jCount];
-			arr[jCount] = temp;
-			swapped = 'V';	
+			arr[jCount] = temp;	
 			}
 		}
-		if (swapped == 'F')
-			break;
 	}
 
 	return ;
 }
+
 
 int main(){
 
