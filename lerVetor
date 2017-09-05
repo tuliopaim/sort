@@ -10,7 +10,7 @@ void ler(FILE * p, int * vetor, int size){
 	}
 }
 
-void sort(int * vetor, int size){
+void selectionSort(int * vetor, int size){
 	int temp;
 	int i, j;
 	for (i = 0; i < size; ++i){
@@ -29,7 +29,7 @@ int main(){
 
 	int temp[20][10000], size;
 	int i, j;
-	long double tempo[20];
+	long double tempo[20], media=0;
 	clock_t c2, c1;
 	char nome[20];
 	FILE * p;
@@ -49,11 +49,14 @@ int main(){
 		ler(p, temp[i], size);
 		
 		c1=clock(); //PEGA O CLOCK INICIAL DO PROCESSADOR
-		sort(temp[i], size);
+		selectionSort(temp[i], size);
 		c2=clock(); //CLOCK FINAL
 		tempo[i] = (c2-c1)*1000.0/CLOCKS_PER_SEC;
 		printf("tempo v[%d]: %Lf\n",i,tempo[i]);
+		media+=tempo[i];
 	}
+	media/=20;
+	printf("Media: %LF\n", media);
 
 	fclose(p);
 	return 0;
