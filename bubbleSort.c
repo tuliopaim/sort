@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 void bubbleSort (int * arr , int size)
 {
@@ -27,11 +28,25 @@ void bubbleSort (int * arr , int size)
 		}
 	}
 
-	return ;
 }
 
 
 int main(){
+
+	int vetor[100];
+	int i;
+	srand((unsigned)time(NULL));
+	printf("Vetor: \n");
+	for(i=0;i<100;i++){
+		vetor[i] = rand()%1000;
+		printf("%d ", vetor[i]);	
+	}
+
+	mergeSort(vetor, 100);
+
+	printf("\nVetor Ordenado: \n");
+	for(i=0;i<100;i++) printf("%d ", vetor[i]);
+	printf("\n");
 
 	return 0;
 }
