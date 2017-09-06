@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include "sorts.h"
 
 void ler(FILE * p, int * vetor, int size){
 	int temp=0, j=0, i;
@@ -10,24 +11,9 @@ void ler(FILE * p, int * vetor, int size){
 	}
 }
 
-void selectionSort(int * vetor, int size){
-	int temp;
-	int i, j;
-	for (i = 0; i < size; ++i){
-		for (j = i+1; j < size; ++j){
-			if(vetor[i] > vetor [j]){
-				temp = vetor[i];
-				vetor[i] = vetor[j];
-				vetor[j] = temp;
-			}
-		}
-	}
-
-}
-
 int main(){
 
-	int temp[20][10000], size;
+	int temp[1000000], size;
 	int i, j;
 	long double tempo[20], media=0;
 	clock_t c2, c1;
@@ -42,14 +28,14 @@ int main(){
 	printf("Nome do Arquivo: ");
 	scanf(" %s", nome);
 	p = fopen(nome, "r");
-	if(p == NULL) printf("TEM NADA AQUI NÃO\n");
+	if(p == NULL) printf("TEM ESSE ARQUIVO AQUI NÃO, BURRO\n");
 
 	//LER DO ARQUIVO
 	for (i = 0; i < 20; ++i){
-		ler(p, temp[i], size);
+		ler(p, temp, size);
 		
 		c1=clock(); //PEGA O CLOCK INICIAL DO PROCESSADOR
-		selectionSort(temp[i], size);
+		quickSort(temp, 0, size);
 		c2=clock(); //CLOCK FINAL
 		tempo[i] = (c2-c1)*1000.0/CLOCKS_PER_SEC;
 		printf("tempo v[%d]: %Lf\n",i,tempo[i]);
@@ -57,7 +43,14 @@ int main(){
 	}
 	media/=20;
 	printf("Media: %LF\n", media);
-
 	fclose(p);
+
+	//SALVAR MEDIAS EM ARQUIVO
+	p = fopen("medias.txt", "a");
+
+	fprintf(p, "%LF\n", media);
+	fclose(p);
+
 	return 0;
 }
+
