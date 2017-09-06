@@ -16,7 +16,6 @@ void selectionSort (int * arr , int size)
 
 	for (iCount = 0 ; iCount < size - 1 ; iCount++)
 	{
-	
 		min = iCount;
 
 		for (jCount = iCount + 1 ; jCount < size; jCount++)
@@ -32,11 +31,24 @@ void selectionSort (int * arr , int size)
 			arr[min] = temp;	
 		}
 	}
-
-	return ;
 }
 
 int main(){
+
+	int vetor[100];
+	int i;
+	srand((unsigned)time(NULL));
+	printf("Vetor: \n");
+	for(i=0;i<100;i++){
+		vetor[i] = rand()%1000;
+		printf("%d ", vetor[i]);	
+	}
+
+	selectionSort(vetor, 100);
+
+	printf("\nVetor Ordenado: \n");
+	for(i=0;i<100;i++) printf("%d ", vetor[i]);
+	printf("\n");
 
 	return 0;
 }
