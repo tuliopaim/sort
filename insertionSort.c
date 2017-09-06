@@ -40,7 +40,7 @@ int main(){
 		printf("%d ", vetor[i]);	
 	}
 
-	mergeSort(vetor, 100);
+	insertionSort(vetor, 100);
 
 	printf("\nVetor Ordenado: \n");
 	for(i=0;i<100;i++) printf("%d ", vetor[i]);
