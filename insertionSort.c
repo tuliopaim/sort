@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 void insertionSort (int * arr , int size)
 {
@@ -16,7 +17,6 @@ void insertionSort (int * arr , int size)
 
 	for (iCount = 1 ; iCount < size ; iCount++)
 	{
-	
 		temp = arr[iCount];
 		jCount = iCount - 1;
 		while (jCount >= 0 && arr[jCount] > temp)
@@ -27,12 +27,24 @@ void insertionSort (int * arr , int size)
 		
 		arr[jCount + 1] = temp;
 	}
-
-	return ;
 }
 
-
 int main(){
+
+	int vetor[100];
+	int i;
+	srand((unsigned)time(NULL));
+	printf("Vetor: \n");
+	for(i=0;i<100;i++){
+		vetor[i] = rand()%1000;
+		printf("%d ", vetor[i]);	
+	}
+
+	mergeSort(vetor, 100);
+
+	printf("\nVetor Ordenado: \n");
+	for(i=0;i<100;i++) printf("%d ", vetor[i]);
+	printf("\n");
 
 	return 0;
 }
