@@ -6,10 +6,16 @@ void bubbleSort (int * arr , int size);
 void selectionSort(int * vetor, int size);
 void selectionSort2(int * arr , int size);
 void insertionSort(int * arr , int size);
-void swap(int* a, int* b);
+void merge(int * arr, int l, int m, int r);
+void mergeSort (int * arr , int l, int r);
 int partition(int * arr, int l, int h);
 void quickSort(int * arr, int l, int h);
+void countingSort(int * arr, int size);
+void countSort(int * arr, int size, int exp);
+void radixSort(int * arr, int size);
 
+//BUBBLE
+//------------------------
 
 void bubbleSort (int * arr , int size)
 {
@@ -38,6 +44,9 @@ void bubbleSort (int * arr , int size)
 		}
 	}
 }
+
+//INSERTION
+//----------------------------
 
 void insertionSort (int * arr , int size)
 {
@@ -68,6 +77,9 @@ void insertionSort (int * arr , int size)
 	return ;
 }
 
+//SELECTION
+//-----------------------
+
 void selectionSort(int * vetor, int size){
 	int temp;
 	int i, j;
@@ -82,6 +94,9 @@ void selectionSort(int * vetor, int size){
 	}
 
 }
+
+//SELECTION OTIMIZADO
+//-------------------------
 
 void selectionSort2(int * arr , int size)
 {
@@ -115,6 +130,9 @@ void selectionSort2(int * arr , int size)
 		}
 	}
 }
+
+//MERGE
+//-----------------------
 
 void merge(int * arr, int l, int m, int r){
 
@@ -168,12 +186,8 @@ void mergeSort (int * arr , int l, int r){
 	}
 }
 
-void swap(int* a, int* b)
-{
-    int t = *a;
-    *a = *b;
-    *b = t;
-}
+//QUICK
+//------------------------
 
 int partition(int * arr, int l, int h){
 	int pivot = arr[h];
@@ -203,6 +217,9 @@ void quickSort(int * arr, int l, int h){
 	}
 }
 
+//COUNTING
+//------------------------
+
 void countingSort(int * arr, int size){	
 	int aux[size];
 	int count[RANGE+1];
@@ -225,4 +242,44 @@ void countingSort(int * arr, int size){
 	//PASSAR PRO VETOR ORIGINAL ORDENADO
 	for(i=0;i<size;++i)
 		arr[i]=aux[i];
+}
+
+// RADIX
+//--------------------------
+
+void countSort(int * arr, int size, int exp){	
+	int aux[size];
+	int count[RANGE+1];
+	int i;
+
+	//ZERAR VETOR COUNT
+	memset(count, 0, sizeof(count));
+
+	//ARMAZENAR QUANTIDADE DE CADA NUMERO
+	for(i=0;i<size;++i)
+		count[(arr[i]/exp)%10]+=1;
+	//SOMAR COM POSIÇÃO ANTERIOR PARA OBTER A POSICAO
+	for(i=1;i<RANGE;++i)
+		count[i]+=count[i-1];
+	//COLOCAR OS NUMEROS EM ORDEM NO VETOR AUX 
+	for(i=0;i<size;i++){
+		aux[count[(arr[i]/exp)%10]-1] = arr[i];
+		--count[(arr[i]/exp)%10];
+	}
+	//PASSAR PRO VETOR ORIGINAL ORDENADO
+	for(i=0;i<size;++i)
+		arr[i]=aux[i];
+}
+
+void radixSort(int * arr, int size){
+
+	//ACHAR O VALOR MAXIMO DO VETOR
+	int m = arr[0];
+	for(int i=0;i<size;i++)
+		if(arr[i] > m)
+			m = arr[i];
+	//FAZER O COUNTING PRA CADA DIGITO
+	for(int exp=1; m/exp > 0; exp*=10)
+		countSort(arr, size, exp);
+
 }
