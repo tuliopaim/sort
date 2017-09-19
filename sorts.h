@@ -1,8 +1,11 @@
+#define RANGE 1000
+
 void merge(int * arr, int l, int m, int r);
 void mergeSort (int * arr , int l, int r);
 void bubbleSort (int * arr , int size);
 void selectionSort(int * vetor, int size);
-void insertionSort (int * arr , int size);
+void selectionSort2(int * arr , int size);
+void insertionSort(int * arr , int size);
 void swap(int* a, int* b);
 int partition(int * arr, int l, int h);
 void quickSort(int * arr, int l, int h);
@@ -52,15 +55,13 @@ void insertionSort (int * arr , int size)
 
 	for (iCount = 1 ; iCount < size ; iCount++)
 	{
-	
 		temp = arr[iCount];
 		jCount = iCount - 1;
 		while (jCount >= 0 && arr[jCount] > temp)
 		{
 			arr[jCount + 1] = arr[jCount];
 			jCount--;
-		}
-		
+		}	
 		arr[jCount + 1] = temp;
 	}
 
@@ -82,14 +83,40 @@ void selectionSort(int * vetor, int size){
 
 }
 
-void merge(int * arr, int l, int m, int r){
+void selectionSort2(int * arr , int size)
+{
 
 	/* 
-	* Função de ordenamento merge;
+	* Função de ordenação Selection Sort
 	* @param endereço do array
-	* @param indice inicial do vetor
-	* @param indice final do vetor
+	* @param tamanho do array
 	*/
+	
+	int min, temp;
+	int iCount, jCount;
+
+	printf("Metodo: Selection Sort\n");
+
+	for (iCount = 0 ; iCount < size - 1 ; iCount++)
+	{
+		min = iCount;
+
+		for (jCount = iCount + 1 ; jCount < size; jCount++)
+		{
+			if (arr[jCount] < arr[min])
+				min = jCount;
+		}
+		
+		if (min != iCount)
+		{
+			temp = arr[iCount];
+			arr[iCount] = arr[min];
+			arr[min] = temp;	
+		}
+	}
+}
+
+void merge(int * arr, int l, int m, int r){
 
 	int n1 = m - l;
 	int n2 = r- m;
@@ -133,19 +160,10 @@ void merge(int * arr, int l, int m, int r){
 
 void mergeSort (int * arr , int l, int r){
 
-	/* 
-	* Função de quebra do vetor em 2 até size = 1;
-	* @param endereço do array
-	* @param indice inicial do vetor
-	* @param indice final do vetor
-	*/
-
 	if(l<r){
 		int m = l + (r-l)/2;
-
 		mergeSort(arr, l, m);
 		mergeSort(arr, m+1, r);
-
 		merge(arr, l, m, r);
 	}
 }
@@ -165,10 +183,14 @@ int partition(int * arr, int l, int h){
 	for(int j=l;j<=h-1;j++){
 		if(arr[j] <= pivot){
 			i++;
-			swap(&arr[i], &arr[j]);
+			temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
 		}
 	}
-	swap(&arr[i + 1], &arr[h]);
+	temp = arr[i+1];
+	arr[i+1] = arr[h];
+	arr[h] = temp;
 	return (i+1);
 }
 
@@ -179,4 +201,28 @@ void quickSort(int * arr, int l, int h){
 		quickSort(arr, l, pi-1);
 		quickSort(arr, pi+1, h);
 	}
+}
+
+void countingSort(int * arr, int size){	
+	int aux[size];
+	int count[RANGE+1];
+	int i;
+
+	//ZERAR VETOR COUNT
+	memset(count, 0, sizeof(count));
+
+	//ARMAZENAR QUANTIDADE DE CADA NUMERO
+	for(i=0;i<size;++i)
+		count[arr[i]]+=1;
+	//SOMAR COM POSIÇÃO ANTERIOR PARA OBTER A POSICAO
+	for(i=1;i<RANGE;++i)
+		count[i]+=count[i-1];
+	//COLOCAR OS NUMEROS EM ORDEM NO VETOR AUX 
+	for(i=0;i<size;i++){
+		aux[count[arr[i]]-1] = arr[i];
+		--count[arr[i]];
+	}
+	//PASSAR PRO VETOR ORIGINAL ORDENADO
+	for(i=0;i<size;++i)
+		arr[i]=aux[i];
 }
