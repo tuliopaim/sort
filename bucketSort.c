@@ -99,7 +99,7 @@ void bucketSort(int * arr, int size){
 		j=size-1;
 		while(1){
 			if(j<0) break;
-			if((arr[i] > j*(maior/size) || (arr[i] <= (j+1)*(maior/size)))){
+			if((arr[i] > j*(maior/size) && (arr[i] <= (j+1)*(maior/size)))){
 				b[j].balde[b[j].topo++] = arr[i];
 				break;
 			}
