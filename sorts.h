@@ -283,3 +283,46 @@ void radixSort(int * arr, int size){
 		countSort(arr, size, exp);
 
 }
+
+//BUCKET
+//---------------------------------------
+
+void bucketSort(int * arr, int size, int qnt_baldes){
+	int i,j,k;
+	int min = arr[0], max = arr[0];
+	int *balde[qnt_baldes], qntNumeroBalde[qnt_baldes], alocadosBalde[qnt_baldes];
+	int tamanhoBalde = 0;
+	for (int i = 0; i < qnt_baldes; ++i){
+		alocadosBalde[i] = 25;
+		qntNumeroBalde[i] = 0;
+		balde[i] = malloc(sizeof(int) * alocadosBalde[i]);
+	}
+
+	for (int i = 0; i < size; ++i){
+		min = min < arr[i] ? min : arr[i];
+		max = max > arr[i] ? max : arr[i];
+	}
+
+	tamanhoBalde = ((max - min) / (float)qnt_baldes) + 0.5f;
+
+	for(int i = 0; i < size; ++i){
+		for (int j = 0; j < qnt_baldes; ++j){
+			if(min + (tamanhoBalde * (j + 1)) - 1 < arr[i] && j + 1 < qnt_baldes) continue;
+			if(alocadosBalde[j] <= qntNumeroBalde[j]){
+				alocadosBalde[j] *= 2;
+				balde[j] = realloc(balde[j], sizeof(int) * alocadosBalde[j]);
+			}
+			balde[j][qntNumeroBalde[j]++] = arr[i];
+			break;
+		}
+	}
+
+
+	k = 0; // Posição no Array final
+	for (int i = 0; i < qnt_baldes; ++i){
+		insertionSort(balde[i], qntNumeroBalde[i]);
+		for (int j = 0; j < qntNumeroBalde[i]; ++j){
+			arr[k++] = balde[i][j];
+		}
+	}
+}
