@@ -1,5 +1,13 @@
 #define RANGE 1000
 
+
+//-----------------------------
+//BIBLIOTECA
+//TRABALHO DE TULIO PAIM E BRUNO ROCHA
+//SORTS
+//-----------------------------
+
+
 void merge(int * arr, int l, int m, int r);
 void mergeSort (int * arr , int l, int r);
 void bubbleSort (int * arr , int size);
@@ -59,8 +67,6 @@ void insertionSort (int * arr , int size)
 
 	int temp;
 	int iCount, jCount;
-
-	printf("Metodo: Insertion Sort\n");
 
 	for (iCount = 1 ; iCount < size ; iCount++)
 	{
@@ -222,11 +228,8 @@ void quickSort(int * arr, int l, int h){
 
 void countingSort(int * arr, int size){	
 	int aux[size];
-	int count[RANGE+1];
+	int count[RANGE+1]={0};
 	int i;
-
-	//ZERAR VETOR COUNT
-	memset(count, 0, sizeof(count));
 
 	//ARMAZENAR QUANTIDADE DE CADA NUMERO
 	for(i=0;i<size;++i)
@@ -292,21 +295,21 @@ void bucketSort(int * arr, int size, int qnt_baldes){
 	int min = arr[0], max = arr[0];
 	int *balde[qnt_baldes], qntNumeroBalde[qnt_baldes], alocadosBalde[qnt_baldes];
 	int tamanhoBalde = 0;
-	for (int i = 0; i < qnt_baldes; ++i){
-		alocadosBalde[i] = 25;
+	for (i = 0; i < qnt_baldes; ++i){
+		alocadosBalde[i] = 1;
 		qntNumeroBalde[i] = 0;
 		balde[i] = malloc(sizeof(int) * alocadosBalde[i]);
 	}
 
-	for (int i = 0; i < size; ++i){
+	for (i = 0; i < size; ++i){
 		min = min < arr[i] ? min : arr[i];
 		max = max > arr[i] ? max : arr[i];
 	}
 
 	tamanhoBalde = ((max - min) / (float)qnt_baldes) + 0.5f;
 
-	for(int i = 0; i < size; ++i){
-		for (int j = 0; j < qnt_baldes; ++j){
+	for(i = 0; i < size; ++i){
+		for (j = 0; j < qnt_baldes; ++j){
 			if(min + (tamanhoBalde * (j + 1)) - 1 < arr[i] && j + 1 < qnt_baldes) continue;
 			if(alocadosBalde[j] <= qntNumeroBalde[j]){
 				alocadosBalde[j] *= 2;
@@ -319,9 +322,9 @@ void bucketSort(int * arr, int size, int qnt_baldes){
 
 
 	k = 0; // Posição no Array final
-	for (int i = 0; i < qnt_baldes; ++i){
+	for (i = 0; i < qnt_baldes; ++i){
 		insertionSort(balde[i], qntNumeroBalde[i]);
-		for (int j = 0; j < qntNumeroBalde[i]; ++j){
+		for (j = 0; j < qntNumeroBalde[i]; ++j){
 			arr[k++] = balde[i][j];
 		}
 	}
